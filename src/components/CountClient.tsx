@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 export default function CountClient({ initialCount }: { initialCount: number }) {
-    const count = initialCount
+    const [count, setCount] = useState(initialCount)
     const [loading, setLoading] = useState(false);
 
     const handleClick = async () => {
@@ -11,7 +11,7 @@ export default function CountClient({ initialCount }: { initialCount: number }) 
         try {
             const res = await fetch('/api/count', { method: 'POST' });
             const data = await res.json();
-            const count = data.count;
+            setCount(data.count);
         } catch {
         // 错误处理可根据需要补充
         } finally {
