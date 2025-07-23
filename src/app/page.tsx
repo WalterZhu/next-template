@@ -1,14 +1,14 @@
-import CountClient from './CountClient';
+//import CountClient from './countClient';
+
+import { getCount } from '@/lib/count'
 
 export default async function Home() {
   // 服务端获取初始数据
-  const res = await fetch('/api/count', { cache: 'no-store' });
-  const data = await res.json();
-  const count = data.count;
+  const count = await getCount();
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <CountClient initialCount={count} />
+      <span>{String(count)}</span>
     </div>
   );
 }
