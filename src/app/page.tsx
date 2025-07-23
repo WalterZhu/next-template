@@ -1,5 +1,5 @@
 import { getCount } from '@/lib/count';
-import CountClient from './countClient';
+import CountClient from '@/components/CountClient';
 
 export default async function Home() {
   // 服务端获取初始数据
@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <CountClient initialCount={count} />
+      <CountClient initialCount={Number(count)} />
     </div>
   );
 }
