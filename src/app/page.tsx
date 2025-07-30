@@ -1,5 +1,5 @@
-import { getCount } from '@/lib/count';
 import CountClient from '@/components/CountClient';
+import { getCount } from '@/lib/count';
 
 export default async function Home() {
   // 服务端获取初始数据
