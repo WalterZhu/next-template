@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "next-template",
-  "alias": ["next-template.vercel.app"],
+  "alias": ["next.memeta.io"],
   "regions": ["hnd1"],
   "build": {
     "env": {
