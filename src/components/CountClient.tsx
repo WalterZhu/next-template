@@ -72,10 +72,6 @@ export default function CountClient({ initialCount }: CountClientProps) {
                     </span>
                 ) : '点击增加'}
             </button>
-            
-            <div className="text-gray-500 text-sm">
-                当前计数: {count}
-            </div>
         </div>
     );
 } 
