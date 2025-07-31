@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:vercel": "vercel dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preview": "vercel",
+    "deploy": "vercel --prod",
+    "env:pull": "vercel env pull .env.local"
   },
   "dependencies": {
     "@upstash/redis": "^1.35.1",
