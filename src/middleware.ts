@@ -1,7 +1,11 @@
 import { NextResponse, NextRequest } from 'next/server'
 
 export const config = {
-    runtime: 'experimental-edge',
+    runtime: 'nodejs',
+    matcher: [
+        '/((?!_next/static|_next/image|favicon.ico).*)',
+    ],
+
 }
 
 export function middleware(request: NextRequest) {
