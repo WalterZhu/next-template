@@ -1,5 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server'
 
+export const config = {
+    runtime: 'nodejs',
+}
+
 export function middleware(request: NextRequest) {
     const requestHeaders = request.headers;
     const country = requestHeaders.get("x-vercel-ip-country");
