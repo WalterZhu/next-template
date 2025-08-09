@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server'
 
 export const config = {
-    runtime: 'edge',
+    runtime: 'experimental-edge',
 }
 
 export function middleware(request: NextRequest) {
