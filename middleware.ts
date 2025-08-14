@@ -1,14 +1,18 @@
-import { NextResponse, NextRequest } from 'next/server'
+export { auth as middleware } from "./auth"
 
 export const config = {
     runtime: 'nodejs',
     matcher: [
         '/((?!_next/static|_next/image|favicon.ico).*)',
     ],
-
 }
 
-export function middleware(request: NextRequest) {
+/*
+const secret = new TextEncoder().encode(
+  process.env.JWT_SECRET || 'your-secret-key'
+)
+
+export async function middleware(request: NextRequest) {
     const requestHeaders = request.headers;
     const country = requestHeaders.get("x-vercel-ip-country");
 
@@ -37,5 +41,20 @@ export function middleware(request: NextRequest) {
             { status: 403, headers: { 'content-type': 'text/html; charset=utf-8' } }
         );
     }
+
+    // JWT 验证
+    const token = request.cookies.get('auth-token')?.value;
+    if (!token) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    try {
+      await jwtVerify(token, secret);
+    } catch (error) {
+      console.error('JWT verification failed in middleware:', error);
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     return NextResponse.next();
 }
+    */

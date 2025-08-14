@@ -13,8 +13,10 @@
     "env:pull": "vercel env pull .env.local"
   },
   "dependencies": {
+    "@auth/upstash-redis-adapter": "^2.10.0",
     "@upstash/redis": "^1.35.1",
     "next": "15.4.3",
+    "next-auth": "^4.24.11",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
