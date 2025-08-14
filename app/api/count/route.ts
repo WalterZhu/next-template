@@ -1,6 +1,6 @@
 // app/api/count/route.ts
 import { NextResponse } from "next/server";
-import { getCount, increaseCount } from "@/lib/count";
+import { getCount, increaseCount } from "../../../lib/count";
 
 export async function GET() {
   try {
