@@ -1,6 +1,4 @@
 import { Redis } from "@upstash/redis";
-import { cookies } from "next/headers";
-import { cache } from "react";
 
 const redis = Redis.fromEnv();
 
@@ -55,21 +53,4 @@ export async function getSession(sessionId: string): Promise<AnonymousSession | 
 }
 
 
-// 服务端组件session管理 - 只读取，不设置cookie
-export const getOrCreateSessionServerSide = cache(async (): Promise<AnonymousSession> => {
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get('session-id')?.value;
-  
-  if (sessionId) {
-    // 尝试获取现有session
-    const existingSession = await getSession(sessionId);
-    if (existingSession) {
-      return existingSession;
-    }
-  }
-  
-  // 如果没有有效session，创建一个新的（但不设置cookie）
-  // cookie将通过其他方式设置（比如客户端或Server Action）
-  return await createAnonymousSession();
-});
 

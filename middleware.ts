@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "./lib/session";
+import { getSession, createAnonymousSession } from "./lib/session";
 import { isRegionBlocked, createBlockedResponse, getGeoConfigFromEnv } from "./lib/geo-blocking";
 
 export async function middleware(request: NextRequest) {
@@ -12,7 +12,29 @@ export async function middleware(request: NextRequest) {
     return createBlockedResponse(country || 'Unknown', geoConfig);
   }
 
-  // 2. 对于需要 session 保护的 API 路由
+  // 2. 对于页面请求，确保有有效的session
+  if (!request.nextUrl.pathname.startsWith('/api/')) {
+    const sessionId = request.cookies.get('session-id')?.value;
+    
+    if (!sessionId) {
+      // 创建新session
+      const session = await createAnonymousSession();
+      const response = NextResponse.next();
+      
+      // 设置cookie
+      response.cookies.set('session-id', session.id, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 86400, // 24小时
+        path: '/',
+      });
+      
+      return response;
+    }
+  }
+
+  // 3. 对于需要 session 保护的 API 路由
   if (request.nextUrl.pathname.startsWith('/api/')) {
     
     // 检查是否有 session cookie
@@ -65,7 +87,7 @@ export async function middleware(request: NextRequest) {
     }
   }
   
-  // 3. 其他请求直接通过
+  // 4. 其他请求直接通过
   return NextResponse.next();
 }
 
