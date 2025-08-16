@@ -2,18 +2,15 @@ import CountDisplay from '../components/CountDisplay';
 import IncrementButton from '../components/IncrementButton';
 import GeoInfo from '../components/GeoInfo';
 import { getCount } from '../lib/count';
-import { getSession } from '../lib/session';
+import { getOrCreateSessionServerSide } from '../lib/session';
 import { headers } from 'next/headers';
-import { cookies } from 'next/headers';
 
 export default async function Home() {
   // 服务端获取初始数据
   const count = await getCount();
   
-  // 获取session信息
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get('session-id')?.value;
-  const session = sessionId ? await getSession(sessionId) : null;
+  // 获取或创建session（不设置cookie）
+  const session = await getOrCreateSessionServerSide();
   
   // 获取地理位置信息
   const headersList = await headers();
