@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "./lib/session";
+import { isRegionBlocked, createBlockedResponse, getGeoConfigFromEnv } from "./lib/geo-blocking";
 
 export async function middleware(request: NextRequest) {
-  // 对于需要 session 保护的 API 路由
+  // 1. 首先进行地区屏蔽检查
+  const country = request.headers.get('x-vercel-ip-country');
+  const region = request.headers.get('x-vercel-ip-region');
+  const geoConfig = getGeoConfigFromEnv();
+  
+  if (isRegionBlocked(country, region, geoConfig)) {
+    return createBlockedResponse(country || 'Unknown', geoConfig);
+  }
+
+  // 2. 对于需要 session 保护的 API 路由
   if (request.nextUrl.pathname.startsWith('/api/') && 
       !request.nextUrl.pathname.startsWith('/api/session')) {
     
@@ -56,7 +66,7 @@ export async function middleware(request: NextRequest) {
     }
   }
   
-  // 其他请求直接通过
+  // 3. 其他请求直接通过
   return NextResponse.next();
 }
 
