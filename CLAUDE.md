@@ -49,7 +49,9 @@ lib/
 
 components/
 ├── SessionProvider.tsx     # Session context provider
-└── CountClient.tsx         # Client component with session integration
+├── CountDisplay.tsx        # Server component for displaying count and session
+├── IncrementButton.tsx     # Client component for count increment
+└── GeoInfo.tsx            # Geographic location display component
 ```
 
 ### Technology Stack
