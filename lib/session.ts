@@ -1,5 +1,4 @@
 import { Redis } from "@upstash/redis";
-import { NextRequest, NextResponse } from "next/server";
 
 const redis = Redis.fromEnv();
 
@@ -53,29 +52,5 @@ export async function getSession(sessionId: string): Promise<AnonymousSession | 
   }
 }
 
-export async function ensureSession(request: NextRequest): Promise<{ session: AnonymousSession; isNew: boolean }> {
-  const sessionId = request.cookies.get('session-id')?.value;
-  
-  if (sessionId) {
-    const existingSession = await getSession(sessionId);
-    if (existingSession) {
-      return { session: existingSession, isNew: false };
-    }
-  }
-  
-  // 创建新的匿名会话
-  const newSession = await createAnonymousSession();
-  return { session: newSession, isNew: true };
-}
 
-export function setSessionCookie(response: NextResponse, sessionId: string): NextResponse {
-  response.cookies.set('session-id', sessionId, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: 86400, // 24小时
-    path: '/',
-  });
-  
-  return response;
-}
+

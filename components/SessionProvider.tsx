@@ -27,11 +27,12 @@ export function useSession() {
 
 interface SessionProviderProps {
   children: ReactNode;
+  sessionData?: Session | null;
 }
 
-export function SessionProvider({ children }: SessionProviderProps) {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+export function SessionProvider({ children, sessionData }: SessionProviderProps) {
+  const [session, setSession] = useState<Session | null>(sessionData || null);
+  const [loading, setLoading] = useState(!sessionData);
 
   const fetchSession = async () => {
     try {
@@ -53,8 +54,11 @@ export function SessionProvider({ children }: SessionProviderProps) {
   };
 
   useEffect(() => {
-    fetchSession();
-  }, []);
+    // 如果已有sessionData，不需要fetch
+    if (!sessionData) {
+      fetchSession();
+    }
+  }, [sessionData]);
 
   return (
     <SessionContext.Provider value={{ session, loading, refreshSession }}>
