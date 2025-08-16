@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useSession } from './SessionProvider';
 
 interface CountClientProps {
   initialCount: number;
@@ -10,6 +11,7 @@ export default function CountClient({ initialCount }: CountClientProps) {
   const [count, setCount] = useState(initialCount);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { session, loading: sessionLoading } = useSession();
 
   const handleClick = async () => {
     setLoading(true);
@@ -38,11 +40,26 @@ export default function CountClient({ initialCount }: CountClientProps) {
     }
   };
 
+  if (sessionLoading) {
+    return (
+      <div className="flex flex-col items-center space-y-6 p-8 bg-white rounded-lg shadow-lg max-w-md mx-auto">
+        <div className="text-lg text-gray-500">加载会话中...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center space-y-6 p-8 bg-white rounded-lg shadow-lg max-w-md mx-auto">
       <div className="text-6xl font-bold text-blue-600 mb-4">
         {count}
       </div>
+      
+      {session && (
+        <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-md border">
+          <div>Session ID: {session.id}</div>
+          <div>创建时间: {new Date(session.createdAt).toLocaleString('zh-CN')}</div>
+        </div>
+      )}
 
       {error && (
         <div className="text-red-500 text-sm bg-red-50 p-3 rounded-md border border-red-200">
