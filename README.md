@@ -14,7 +14,7 @@
 - 🚀 **Next.js 15** - 最新版本，支持 App Router 和 RSC
 - 🎨 **Tailwind CSS 4** - 实用优先的 CSS 框架
 - 📘 **TypeScript** - 完整的类型支持
-- 🔐 **Session 认证** - 基于 Redis 的匿名会话管理系统
+- 🔐 **Cookie-Only Session** - 基于 Redis 的纯 Cookie 会话管理系统
 - 🌍 **地区屏蔽** - 基于 Vercel 地理位置的访问控制
 - 📍 **位置显示** - 实时显示用户访问地理位置
 - 📊 **API 路由** - RESTful API 设计
@@ -91,7 +91,7 @@ bun dev
 │   ├── count.ts               # 计数逻辑
 │   ├── geo-blocking.ts        # 地区屏蔽功能
 │   └── session.ts             # 会话管理
-├── middleware.ts              # Next.js中间件(地区屏蔽)
+├── middleware.ts              # Next.js中间件(地区屏蔽+Session管理)
 ├── public/                    # 静态资源
 ├── .env.local                 # 环境变量
 ├── next.config.js            # Next.js 配置
@@ -102,11 +102,12 @@ bun dev
 
 ## 🔧 主要功能
 
-### 认证系统
-- 🔐 基于 Redis 的 Session 管理
-- 👤 支持匿名用户和认证用户
-- 🍪 自动 Cookie 管理
-- 🛡️ 安全的会话处理
+### Cookie-Only Session 系统
+- 🔐 基于 Redis 的纯 Cookie 会话管理
+- 👤 无需用户注册的匿名会话系统
+- 🍪 Middleware 自动创建和管理 Session
+- 🛡️ 安全的 httpOnly Cookie 设置
+- ⚡ 24小时自动过期机制
 
 ### API 设计
 - 📡 RESTful API 设计
@@ -115,10 +116,12 @@ bun dev
 - 📊 完整的错误处理
 
 ### 前端特性
-- ⚡ 服务器组件 (RSC)
+- ⚡ 服务器组件 (RSC) 
 - 🌊 流式渲染
 - 🎨 响应式设计
 - 🔄 实时状态更新
+- 📦 模块化组件架构
+- 🚀 并行数据获取优化
 
 ## 🌐 Vercel 部署
 
