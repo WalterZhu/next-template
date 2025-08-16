@@ -48,41 +48,44 @@ export default function GeoInfo({ country, region, city }: GeoInfoProps) {
   const countryName = countryNames[country] || country;
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-gray-200 mb-6">
-      <div className="flex items-center justify-between mb-3">
+    <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
+      <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
           <span>🌍</span>
           <span>访问位置</span>
         </h3>
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-gray-500 bg-gray-100/80 px-2 py-1 rounded-full">
           {new Date().toLocaleTimeString()}
         </span>
       </div>
       
-      <div className="space-y-2">
-        <div className="flex items-center space-x-3">
-          <span className="text-2xl">{getFlagEmoji(country)}</span>
-          <div>
-            <div className="font-medium text-gray-800">
+      <div className="space-y-3">
+        <div className="flex items-center space-x-4">
+          <div className="text-3xl drop-shadow-sm">{getFlagEmoji(country)}</div>
+          <div className="flex-1">
+            <div className="font-semibold text-gray-800 text-lg">
               {countryName}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-500 font-mono">
               {country}
             </div>
           </div>
         </div>
         
-        {region && region !== 'Unknown' && (
-          <div className="text-sm text-gray-600 pl-8">
-            地区: {region}
+        {(region && region !== 'Unknown') || (city && city !== 'Unknown') ? (
+          <div className="bg-gray-50/80 rounded-lg p-3 ml-12 space-y-1">
+            {region && region !== 'Unknown' && (
+              <div className="text-sm text-gray-600">
+                <span className="text-gray-500">地区:</span> {region}
+              </div>
+            )}
+            {city && city !== 'Unknown' && (
+              <div className="text-sm text-gray-600">
+                <span className="text-gray-500">城市:</span> {city}
+              </div>
+            )}
           </div>
-        )}
-        
-        {city && city !== 'Unknown' && (
-          <div className="text-sm text-gray-600 pl-8">
-            城市: {city}
-          </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
