@@ -4,7 +4,7 @@ import GeoInfo from '../components/GeoInfo';
 import { SessionProvider } from '../components/SessionProvider';
 import { getCount } from '../lib/count';
 import { headers, cookies } from 'next/headers';
-import { getSession } from '../lib/session';
+import { getSession, type AnonymousSession } from '../lib/session';
 
 async function getServerData() {
   const [count, cookieStore, headersList] = await Promise.all([
@@ -70,7 +70,7 @@ function GeoSection({ country, region, city }: {
 
 function CounterSection({ count, session }: { 
   count: number; 
-  session: any; 
+  session: AnonymousSession | null; 
 }) {
   return (
     <div className="flex justify-center">
